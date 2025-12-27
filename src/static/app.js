@@ -20,12 +20,79 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const spotsLeft = details.max_participants - details.participants.length;
 
-        activityCard.innerHTML = `
-          <h4>${name}</h4>
-          <p>${details.description}</p>
-          <p><strong>Schedule:</strong> ${details.schedule}</p>
-          <p><strong>Availability:</strong> ${spotsLeft} spots left</p>
-        `;
+        // Title
+        const title = document.createElement("h4");
+        title.textContent = name;
+
+        // Description
+        const desc = document.createElement("p");
+        desc.textContent = details.description;
+
+        // Schedule
+        const scheduleP = document.createElement("p");
+        scheduleP.innerHTML = `<strong>Schedule:</strong> ${details.schedule}`;
+
+        // Availability
+        const availP = document.createElement("p");
+        availP.innerHTML = `<strong>Availability:</strong> ${spotsLeft} spots left`;
+
+        // Participants section
+        const participantsDiv = document.createElement("div");
+        participantsDiv.className = "participants";
+        const participantsTitle = document.createElement("strong");
+        participantsTitle.textContent = "Participants:";
+        participantsDiv.appendChild(participantsTitle);
+
+        const ul = document.createElement("ul");
+        if (details.participants && details.participants.length > 0) {
+          details.participants.forEach((p) => {
+            const li = document.createElement("li");
+            const tag = document.createElement("span");
+            tag.className = "participant-tag";
+            tag.textContent = p;
+            li.appendChild(tag);
+            // Add Unregister button
+            const unregisterBtn = document.createElement("button");
+            unregisterBtn.className = "unregister-btn";
+            unregisterBtn.title = "Unregister participant";
+            unregisterBtn.textContent = "Unregister";
+            unregisterBtn.addEventListener("click", async (e) => {
+              e.stopPropagation();
+              // Call API to unregister participant
+              try {
+                const response = await fetch(`/activities/${encodeURIComponent(name)}/unregister?email=${encodeURIComponent(p)}`, {
+                  method: "POST",
+                });
+                const result = await response.json();
+                if (response.ok) {
+                  // Refresh activities list
+                  fetchActivities();
+                } else {
+                  messageDiv.textContent = result.detail || "An error occurred";
+                  messageDiv.className = "error";
+                }
+              } catch (error) {
+                messageDiv.textContent = "Failed to unregister participant.";
+                messageDiv.className = "error";
+              }
+            });
+            li.appendChild(unregisterBtn);
+            ul.appendChild(li);
+          });
+        } else {
+          const li = document.createElement("li");
+          li.className = "none";
+          li.textContent = "No participants yet";
+          ul.appendChild(li);
+        }
+        participantsDiv.appendChild(ul);
+
+        // Append to card
+        activityCard.appendChild(title);
+        activityCard.appendChild(desc);
+        activityCard.appendChild(scheduleP);
+        activityCard.appendChild(availP);
+        activityCard.appendChild(participantsDiv);
 
         activitiesList.appendChild(activityCard);
 
@@ -62,6 +129,8 @@ document.addEventListener("DOMContentLoaded", () => {
         messageDiv.textContent = result.message;
         messageDiv.className = "success";
         signupForm.reset();
+        // Refresh activities list to show new participant
+        fetchActivities();
       } else {
         messageDiv.textContent = result.detail || "An error occurred";
         messageDiv.className = "error";

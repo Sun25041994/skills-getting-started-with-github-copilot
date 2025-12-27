@@ -74,6 +74,68 @@ section h3 {
   margin-bottom: 8px;
 }
 
+/* Participants section inside activity-card */
+.activity-card .participants {
+  margin-top: 12px;
+  padding-top: 8px;
+  border-top: 1px dashed #eee;
+}
+
+.activity-card .participants strong {
+  display: block;
+  color: #1a237e;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.activity-card .participants ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+/* Unregister button for participant */
+.unregister-btn {
+  margin-left: 8px;
+  background-color: #fff0f0;
+  color: #c62828;
+  border: 1px solid #c62828;
+  border-radius: 4px;
+  font-size: 13px;
+  padding: 2px 10px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.unregister-btn:hover {
+  background-color: #c62828;
+  color: #fff;
+}
+}
+
+.activity-card .participants li {
+  margin-bottom: 6px;
+  color: #444;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Small pill/tag for each participant */
+.participant-tag {
+  background: #e8f0ff;
+  color: #0b3b8a;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+/* When no participants are present */
+.activity-card .participants .none {
+  color: #888;
+  font-style: italic;
+  padding-left: 2px;
+}
+
 .form-group {
   margin-bottom: 15px;
 }
