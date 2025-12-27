@@ -74,6 +74,52 @@ section h3 {
   margin-bottom: 8px;
 }
 
+/* Participants section inside activity-card */
+.activity-card .participants {
+  margin-top: 12px;
+  padding-top: 8px;
+  border-top: 1px dashed #eee;
+}
+
+.activity-card .participants strong {
+  display: block;
+  color: #1a237e;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.activity-card .participants ul {
+  list-style: disc;
+  padding-left: 20px;
+  margin: 0;
+}
+
+.activity-card .participants li {
+  margin-bottom: 6px;
+  color: #444;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Small pill/tag for each participant */
+.participant-tag {
+  background: #e8f0ff;
+  color: #0b3b8a;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+/* When no participants are present */
+.activity-card .participants .none {
+  color: #888;
+  font-style: italic;
+  padding-left: 2px;
+}
+
 .form-group {
   margin-bottom: 15px;
 }
